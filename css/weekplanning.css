@@ -1,0 +1,108 @@
+/* Week secties */
+.week-section {
+    margin-bottom: var(--space-xl);
+}
+
+.week-heading {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.week-number {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-lighter);
+    font-weight: var(--font-weight-normal);
+}
+
+/* Week grid: mobiel = kolom, tablet+ = grid */
+.week-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+    .week-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+    }
+}
+
+@media (min-width: 1024px) {
+    .week-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .week-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Dag kaart */
+.day-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-card);
+    padding: var(--space-md);
+    transition: box-shadow var(--transition-fast);
+}
+
+.day-card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+.day-card--today {
+    border-left: 3px solid var(--color-accent);
+}
+
+.day-card--past {
+    opacity: 0.5;
+}
+
+.day-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-sm);
+}
+
+.day-card__name {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    text-transform: capitalize;
+}
+
+.day-card__date {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+}
+
+.day-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.day-card__dish {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+}
+
+.day-card__note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+}
+
+.day-card__note:focus {
+    color: var(--color-text);
+}

@@ -1,0 +1,8 @@
+# OS bestanden
+.DS_Store
+Thumbs.db
+
+# Editor bestanden
+*.swp
+*.swo
+*~

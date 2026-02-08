@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2EAADC">
+    <title>Weekmenu</title>
+    <link rel="icon" href="assets/favicon.svg">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css?v=2">
+    <link rel="stylesheet" href="css/reset.css?v=2">
+    <link rel="stylesheet" href="css/layout.css?v=3">
+    <link rel="stylesheet" href="css/components.css?v=2">
+    <link rel="stylesheet" href="css/weekplanning.css?v=2">
+    <link rel="stylesheet" href="css/freezer.css?v=2">
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Google API Client -->
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+</head>
+<body>
+
+    <!-- ===== LOGIN SCHERM ===== -->
+    <div id="login-screen" class="screen active">
+        <div class="login-card">
+            <h1>Weekmenu</h1>
+            <p>Plan je weekmenu samen</p>
+            <button id="btn-login" class="btn btn-primary" disabled>
+                Inloggen met Google
+            </button>
+            <p id="login-status" style="margin-top: var(--space-md); font-size: var(--font-size-sm); color: var(--color-text-lighter);">
+                Laden...
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== APP SHELL ===== -->
+    <div id="app-shell" class="screen">
+
+        <!-- HEADER -->
+        <header class="app-header">
+            <h1 class="app-title">Weekmenu</h1>
+            <div class="header-actions">
+                <span id="save-indicator" class="save-indicator"></span>
+                <span id="user-name" class="user-badge"></span>
+                <button id="btn-logout" class="btn btn-ghost btn-sm">Uitloggen</button>
+            </div>
+        </header>
+
+        <!-- TAB NAVIGATIE -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="weekplanning">Weekplanning</button>
+            <button class="tab-btn" data-tab="freezer">Vriezer</button>
+            <button class="tab-btn" data-tab="archive">Archief</button>
+        </nav>
+
+        <!-- HOOFD CONTENT -->
+        <main id="main-content" class="main-content">
+
+            <!-- TAB: Weekplanning -->
+            <section id="view-weekplanning" class="view active">
+                <div class="week-section">
+                    <h2 class="week-heading">
+                        Deze week
+                        <span id="current-week-number" class="week-number"></span>
+                    </h2>
+                    <div id="current-week-grid" class="week-grid"></div>
+                </div>
+                <div class="week-section">
+                    <h2 class="week-heading">
+                        Volgende week
+                        <span id="next-week-number" class="week-number"></span>
+                    </h2>
+                    <div id="next-week-grid" class="week-grid"></div>
+                </div>
+            </section>
+
+            <!-- TAB: Vriezer -->
+            <section id="view-freezer" class="view">
+                <div class="freezer-header">
+                    <div class="freezer-tabs">
+                        <button class="freezer-tab-btn active" data-freezer="voorraad">Voorraad</button>
+                        <button class="freezer-tab-btn" data-freezer="restjes">Restjes</button>
+                    </div>
+                    <button id="btn-add-freezer" class="btn btn-primary btn-sm">+ Item toevoegen</button>
+                </div>
+                <div id="freezer-list" class="freezer-list">
+                    <p class="empty-state">Geen items in de vriezer</p>
+                </div>
+            </section>
+
+            <!-- TAB: Archief -->
+            <section id="view-archive" class="view">
+                <div class="archive-header">
+                    <input id="archive-search" type="search" placeholder="Zoek in archief..." class="search-input">
+                </div>
+                <div id="archive-list" class="archive-list">
+                    <p class="empty-state">Geen gearchiveerde gerechten</p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- TOAST CONTAINER -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- MODAL OVERLAY -->
+        <div id="modal-overlay" class="modal-overlay hidden"></div>
+    </div>
+
+    <!-- Config -->
+    <script src="config.js"></script>
+
+    <!-- App (ES modules) -->
+    <script type="module" src="js/app.js?v=2"></script>
+</body>
+</html>
