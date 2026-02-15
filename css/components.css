@@ -249,6 +249,103 @@
     color: var(--color-text-light);
 }
 
+/* ===== Meal Picker (Bottom Sheet) ===== */
+.meal-picker {
+    background: var(--color-bg);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    width: 100%;
+    max-width: 440px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform var(--transition-normal);
+    box-shadow: var(--shadow-modal);
+}
+
+.meal-picker--visible {
+    transform: translateY(0);
+}
+
+.meal-picker__handle {
+    width: 36px;
+    height: 4px;
+    background: var(--color-border);
+    border-radius: 2px;
+    margin: var(--space-sm) auto;
+}
+
+.meal-picker__header {
+    padding: var(--space-sm) var(--space-lg) var(--space-md);
+}
+
+.meal-picker__header h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-sm);
+}
+
+.meal-picker__list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 var(--space-lg);
+    padding-bottom: env(safe-area-inset-bottom, var(--space-md));
+}
+
+.meal-picker__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-sm) var(--space-xs);
+    min-height: var(--touch-target);
+    border: none;
+    background: none;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    font-family: inherit;
+}
+
+.meal-picker__item:last-child {
+    border-bottom: none;
+}
+
+.meal-picker__item:hover {
+    background: var(--color-bg-secondary);
+}
+
+.meal-picker__item:active {
+    background: var(--color-accent-light);
+}
+
+.meal-picker__item-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.meal-picker__empty {
+    text-align: center;
+    padding: var(--space-xl) var(--space-md);
+    color: var(--color-text-lighter);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+    .meal-picker {
+        max-width: 100%;
+    }
+}
+
 /* Responsive toast positie */
 @media (max-width: 767px) {
     .toast-container {

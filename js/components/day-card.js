@@ -1,6 +1,7 @@
 // Dag-kaart component voor weekplanning
 
 import { escapeHtml, debounce } from '../utils.js';
+import { showMealPicker } from './meal-picker.js';
 
 /**
  * Maak een dag-kaart element.
@@ -28,12 +29,20 @@ export function createDayCard(config) {
             <span class="day-card__date">${escapeHtml(config.dateLabel)}</span>
         </div>
         <div class="day-card__body">
-            <input type="text"
-                   class="day-card__dish editable-input"
-                   placeholder="Wat eten we?"
-                   value="${escapeHtml(config.dish)}"
-                   data-field="dish"
-                   autocomplete="off">
+            <div class="day-card__dish-row">
+                <input type="text"
+                       class="day-card__dish editable-input"
+                       placeholder="Wat eten we?"
+                       value="${escapeHtml(config.dish)}"
+                       data-field="dish"
+                       autocomplete="off">
+                <button class="day-card__fav-btn" type="button" title="Favorieten" aria-label="Kies uit favorieten">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="8" r="6.5"/>
+                        <polyline points="8,4 8,8 11,10"/>
+                    </svg>
+                </button>
+            </div>
             <input type="text"
                    class="day-card__note editable-input"
                    placeholder="Bereidingsnotitie..."
@@ -58,6 +67,15 @@ export function createDayCard(config) {
 
         dishInput.addEventListener('input', (e) => debouncedDish(e.target.value));
         noteInput.addEventListener('input', (e) => debouncedNote(e.target.value));
+
+        // Favorieten knop handler
+        const favBtn = card.querySelector('.day-card__fav-btn');
+        favBtn.addEventListener('click', () => {
+            showMealPicker((mealName) => {
+                dishInput.value = mealName;
+                config.onEdit('dish', mealName);
+            });
+        });
     }
 
     return card;

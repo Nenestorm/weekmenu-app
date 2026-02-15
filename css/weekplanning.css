@@ -106,3 +106,41 @@
 .day-card__note:focus {
     color: var(--color-text);
 }
+
+/* Dish row: input + favorieten knop */
+.day-card__dish-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.day-card__dish-row .day-card__dish {
+    flex: 1;
+    min-width: 0;
+}
+
+.day-card__fav-btn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    border-radius: var(--border-radius-sm);
+    color: var(--color-text-lighter);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: var(--space-xs);
+}
+
+.day-card__fav-btn:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-light);
+}
+
+.day-card__fav-btn:active {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+}
