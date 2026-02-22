@@ -146,6 +146,115 @@
     opacity: 1;
 }
 
+/* Archief rating display */
+.archive-item__rating {
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--border-radius-sm);
+    transition: background var(--transition-fast);
+    min-width: 32px;
+    text-align: center;
+    line-height: 1;
+}
+
+.archive-item__rating:hover {
+    background: var(--color-bg-secondary);
+}
+
+.archive-item__rating--empty {
+    color: var(--color-text-lighter);
+    font-size: var(--font-size-sm);
+}
+
+/* Rating filter */
+.rating-filter {
+    display: flex;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.rating-filter__btn {
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 100px;
+    font-size: var(--font-size-sm);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-light);
+    border: 2px solid transparent;
+    cursor: pointer;
+    min-height: 32px;
+    transition: all var(--transition-fast);
+}
+
+.rating-filter__btn:hover {
+    color: var(--color-text);
+}
+
+.rating-filter__btn.active {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+/* Rating popup */
+.rating-popup__label {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-md);
+}
+
+.rating-popup__options {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+}
+
+.rating-popup__btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border-radius: var(--border-radius);
+    background: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    min-width: 80px;
+}
+
+.rating-popup__btn:hover {
+    background: var(--color-bg-secondary);
+}
+
+.rating-popup__btn--active {
+    border-color: var(--color-accent);
+    background: var(--color-accent-light);
+}
+
+.rating-popup__emoji {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.rating-popup__text {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+}
+
+.rating-popup__skip {
+    margin-top: var(--space-sm);
+}
+
+/* Meal picker rating emoji */
+.meal-picker__item-rating {
+    font-size: var(--font-size-base);
+    margin-right: var(--space-xs);
+    line-height: 1;
+}
+
 /* Mobile: altijd actions tonen */
 @media (max-width: 767px) {
     .freezer-item__actions,

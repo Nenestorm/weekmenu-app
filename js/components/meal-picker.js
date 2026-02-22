@@ -91,6 +91,7 @@ function buildItemsHTML(meals) {
     return meals.map(m => `
         <button class="meal-picker__item" type="button" data-name="${escapeHtml(m.displayName)}">
             <span class="meal-picker__item-name">${escapeHtml(m.displayName)}</span>
+            ${m.rating ? `<span class="meal-picker__item-rating">${m.rating}</span>` : ''}
             <span class="badge badge--muted">${m.count}x</span>
         </button>
     `).join('');

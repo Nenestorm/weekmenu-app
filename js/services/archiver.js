@@ -15,10 +15,20 @@ import { parseDate, todayStart } from '../utils.js';
  * 2. Append die gerechten naar het Archief
  * 3. Verwijder de rijen uit Weekplanning (van onder naar boven)
  * 4. Herlaad alle data
+ *
+ * @returns {string[]} Lijst van gerechtnamen die nieuw zijn (niet eerder in archief)
  */
 export async function runArchiver() {
     const allRows = Store.get('weekplanning');
     const today = todayStart();
+
+    // Bestaande gerechten in archief ophalen (voor detectie van nieuwe gerechten)
+    const existingArchive = Store.get('archief');
+    const existingDishes = new Set();
+    for (const row of existingArchive) {
+        const name = (row[0] || '').trim().toLowerCase();
+        if (name) existingDishes.add(name);
+    }
 
     // Vind rijen die gearchiveerd moeten worden
     const toArchive = [];
@@ -44,7 +54,18 @@ export async function runArchiver() {
         }
     });
 
-    if (toArchive.length === 0) return;
+    if (toArchive.length === 0) return [];
+
+    // Bepaal welke gerechten echt nieuw zijn (niet eerder in archief)
+    const newDishNames = [];
+    const seenNewDishes = new Set();
+    for (const item of toArchive) {
+        const key = item.gerecht.trim().toLowerCase();
+        if (!existingDishes.has(key) && !seenNewDishes.has(key)) {
+            newDishNames.push(item.gerecht); // bewaar originele schrijfwijze
+            seenNewDishes.add(key);
+        }
+    }
 
     try {
         // Stap 1: Voeg toe aan Archief (VOOR verwijderen = data-veiligheid)
@@ -52,6 +73,7 @@ export async function runArchiver() {
             item.gerecht,
             item.datumGegeten,
             item.bereidingsnotitie,
+            '', // Beoordeling (leeg, wordt later ingevuld via popup)
         ]);
         await SheetsAPI.appendRows('Archief', archiveRows);
 
@@ -68,8 +90,11 @@ export async function runArchiver() {
             `${count} ${count === 1 ? 'gerecht' : 'gerechten'} gearchiveerd`,
             'info'
         );
+
+        return newDishNames;
     } catch (err) {
         console.error('Archiver failed:', err);
         showToast('Archivering mislukt', 'error');
+        return [];
     }
 }

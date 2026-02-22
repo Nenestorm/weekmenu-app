@@ -113,7 +113,7 @@ async function loadData() {
         await Store.loadAll();
 
         // Auto-archivering draaien
-        await runArchiver();
+        const newDishes = await runArchiver();
 
         // Views initialiseren
         FreezerView.init();
@@ -124,6 +124,18 @@ async function loadData() {
 
         // Render de huidige view
         renderCurrentView();
+
+        // Rating popups tonen voor nieuw gearchiveerde gerechten
+        if (newDishes && newDishes.length > 0) {
+            const { showRatingPopup } = await import('./components/rating-popup.js');
+            const { updateRatingForDish } = await import('./services/rating.js');
+            for (const name of newDishes) {
+                const rating = await showRatingPopup(name);
+                if (rating) {
+                    await updateRatingForDish(name, rating);
+                }
+            }
+        }
 
         // Save status indicator
         Store.onSaveStatus((status) => {

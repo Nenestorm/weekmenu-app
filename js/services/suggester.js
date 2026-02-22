@@ -5,11 +5,11 @@ import * as Store from '../store.js';
 /**
  * Haal de meest gegeten gerechten op, gesorteerd op frequentie.
  * @param {number} limit - Maximaal aantal suggesties (standaard 20)
- * @returns {Array<{displayName: string, count: number}>}
+ * @returns {Array<{displayName: string, count: number, rating: string|null}>}
  */
 export function getTopMeals(limit = 20) {
     const archief = Store.get('archief');
-    const freq = new Map(); // genormaliseerde naam -> { displayName, count }
+    const freq = new Map(); // genormaliseerde naam -> { displayName, count, rating }
 
     for (const row of archief) {
         const raw = (row[0] || '').trim();
@@ -18,11 +18,17 @@ export function getTopMeals(limit = 20) {
         const key = raw.toLowerCase();
 
         if (freq.has(key)) {
-            freq.get(key).count++;
+            const entry = freq.get(key);
+            entry.count++;
+            // Bewaar eerste niet-lege rating
+            if (!entry.rating && row[3]) {
+                entry.rating = row[3];
+            }
         } else {
             freq.set(key, {
                 displayName: raw,
                 count: 1,
+                rating: row[3] || null,
             });
         }
     }
