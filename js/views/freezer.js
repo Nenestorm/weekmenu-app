@@ -52,17 +52,11 @@ export function render() {
 
         const row = createFreezerItem({
             name: item[0] || '',
-            portions: item[1] || '',
-            dateAdded: item[2] || '',
+            dateAdded: item[2] || item[1] || '',
             onEditName: (value) => {
                 const range = `'${sheetName}'!A${sheetRowNum}`;
                 Store.markDirty(range, [[value]]);
                 item[0] = value;
-            },
-            onEditPortions: (value) => {
-                const range = `'${sheetName}'!B${sheetRowNum}`;
-                Store.markDirty(range, [[value]]);
-                item[1] = value;
             },
             onDelete: () => {
                 confirmDelete(item[0], sheetName, sheetRowNum);
@@ -84,15 +78,10 @@ function showAddModal() {
                 <label class="form-label" for="freezer-add-name">Naam</label>
                 <input id="freezer-add-name" class="input" type="text" placeholder="Bijv. Lasagne" autofocus>
             </div>
-            <div class="form-group">
-                <label class="form-label" for="freezer-add-portions">Porties</label>
-                <input id="freezer-add-portions" class="input" type="number" min="1" value="2" placeholder="Aantal">
-            </div>
         `,
         confirmText: 'Toevoegen',
         onConfirm: async () => {
             const name = document.getElementById('freezer-add-name')?.value?.trim();
-            const portions = document.getElementById('freezer-add-portions')?.value?.trim();
 
             if (!name) {
                 showToast('Vul een naam in', 'warning');
@@ -103,7 +92,7 @@ function showAddModal() {
             const dateAdded = formatDateSheet(new Date());
 
             try {
-                await SheetsAPI.appendRow(sheetName, [name, portions || '1', dateAdded]);
+                await SheetsAPI.appendRow(sheetName, [name, '', dateAdded]);
                 await Store.loadAll();
                 render();
                 showToast('Item toegevoegd', 'success');

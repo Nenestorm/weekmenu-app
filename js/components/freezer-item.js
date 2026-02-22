@@ -6,10 +6,8 @@ import { escapeHtml, debounce } from '../utils.js';
  * Maak een vriezer-item rij element.
  * @param {Object} config
  * @param {string} config.name - Item naam
- * @param {string|number} config.portions - Aantal porties
  * @param {string} config.dateAdded - Datum toegevoegd
  * @param {Function} config.onEditName - Callback(value) bij naam wijziging
- * @param {Function} config.onEditPortions - Callback(value) bij porties wijziging
  * @param {Function} config.onDelete - Callback bij verwijderen
  * @returns {HTMLElement}
  */
@@ -25,14 +23,6 @@ export function createFreezerItem(config) {
                    autocomplete="off">
             <div class="freezer-item__meta">${escapeHtml(config.dateAdded || '')}</div>
         </div>
-        <div class="freezer-item__portions">
-            <input type="number"
-                   class="freezer-item__portions-input"
-                   value="${escapeHtml(String(config.portions || ''))}"
-                   min="0"
-                   step="1">
-            <span class="freezer-item__portions-label">porties</span>
-        </div>
         <div class="freezer-item__actions">
             <button class="btn btn-icon btn-danger freezer-item__delete" title="Verwijderen">
                 &#x2715;
@@ -42,17 +32,11 @@ export function createFreezerItem(config) {
 
     // Event handlers
     const nameInput = item.querySelector('.freezer-item__name');
-    const portionsInput = item.querySelector('.freezer-item__portions-input');
     const deleteBtn = item.querySelector('.freezer-item__delete');
 
     if (config.onEditName) {
         const debouncedName = debounce((value) => config.onEditName(value), 1500);
         nameInput.addEventListener('input', (e) => debouncedName(e.target.value));
-    }
-
-    if (config.onEditPortions) {
-        const debouncedPortions = debounce((value) => config.onEditPortions(value), 1500);
-        portionsInput.addEventListener('input', (e) => debouncedPortions(e.target.value));
     }
 
     if (config.onDelete) {
